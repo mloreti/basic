@@ -1,17 +1,19 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user
   before_action :find_user, only: [:show, :destroy]
 
   def show
-    if @user
+    if @user && @user.email == current_user.email
       render :show
-    else
-       render json: { "error":"User not found" }, status: 422
+    elsif @user.nil? 
+      render json: { "error":"User not found" }, status: 422
     end
   end
  
    def create
     @user = User.new(user_params)
     if @user.save
+      @token = Knock::AuthToken.new(payload: { sub: @user.id }).token
       render :show
     else
       render :errors, status: 422
