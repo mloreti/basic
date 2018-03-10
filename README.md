@@ -1,24 +1,16 @@
-# README
+# Basic API with auth
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Sign up
+```
+curl -d '{"user":{"email":"email@email.com", "password":"password", "first_name":"Big", "last_name":"Boy"}}' -H "Content-Type: application/json" -X POST http://localhost:3000/users
+```
 
-Things you may want to cover:
+### Sign in
+```
+ curl -d '{"email":"email@email.com", "password":"password"}' -H "Content-Type: application/json" -X POST http://localhost:3000/user_token
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Get data from authenticated route
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -X GET http://localhost:3000/users/1
+```
