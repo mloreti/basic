@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :destroy]
 
   def show
-    if @user && @user.email == current_user.email
+    if @user
       render :show
     elsif @user.nil? 
       render json: { "error":"User not found" }, status: 422
